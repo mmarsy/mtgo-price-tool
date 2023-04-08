@@ -18,8 +18,7 @@ class DeckReader:
                 else:
                     count = temp_line[:temp_line.find(' ')]
                     name = temp_line[temp_line.find(' ') + 1:]
-                    deck[mode][name] = count
-
+                    deck[mode][name] = int(count)
         cards = get_cards()
 
         # return
@@ -39,7 +38,7 @@ class DeckReader:
 
 
 def test():
-    print(DeckReader('Deck - Naya Depths.txt').side)
+    DeckReader('Deck - Naya Depths.txt')
 
 
 if __name__ == '__main__':

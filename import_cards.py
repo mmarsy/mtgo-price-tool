@@ -3,8 +3,8 @@ import json
 from Card import Card
 
 
-def import_card_data(to_print=True):
-    with open('card-definitions.txt', 'r', encoding='utf-8') as cards:
+def import_card_data(file='card-definitions.txt', to_print=True):
+    with open(file, 'r', encoding='utf-8') as cards:
         json_data = json.load(cards)
         if to_print:
             for i in json_data:
@@ -12,8 +12,8 @@ def import_card_data(to_print=True):
         return json_data
 
 
-def import_price_data(to_print=False, cards=None):
-    with open('price-history-2023-04-06.txt', 'r', encoding='utf-8') as prices:
+def import_price_data(file='price-history-2023-04-06.txt', to_print=False, cards=None):
+    with open(file, 'r', encoding='utf-8') as prices:
         json_data = json.load(prices)
         if cards is not None and to_print:
             for i in json_data:
@@ -33,7 +33,7 @@ def transpose_dict(d: dict):
     return return_d
 
 
-def get_cards(cards=import_card_data(False)):
+def get_cards(cards=import_card_data(to_print=False)):
     names = transpose_dict({_id: cards[_id]['name'] for _id in cards})
     return {name: Card(name, names[name]) for name in names}
 

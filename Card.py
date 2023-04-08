@@ -8,8 +8,11 @@ class Card:
         self.name = name
         self.ids = ids
 
-    def __repr__(self):
+    def show(self):
         return f'<{self.name}: {self.ids}>'
+
+    def __repr__(self):
+        return f'{self.name}'
 
     # this definition of hash means that name is only distinguishing property od Card
     def __hash__(self):
