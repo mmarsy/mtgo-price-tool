@@ -42,7 +42,7 @@ def export_to_dek(choice_of_cards, dictionary_of_cards, name=None):
         xml.appendChild(temp_card)
 
     xml_str = root.toprettyxml(indent="  ")
-    save_path_file = f'{name}'
+    save_path_file = name
     with open(save_path_file, "w") as f:
         f.write(xml_str)
 
