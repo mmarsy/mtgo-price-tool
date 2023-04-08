@@ -12,9 +12,13 @@ def main():
     decklist = decks[input('CHOOSE DECKLIST TO HANDLE')]
     price, card_choices = minimize_deck_price(f'uploaded-decks/{decklist}')
     name = decklist
+    name = name.replace('.txt', '.dek')
     if 'Deck' in name:
         name = name.replace('Deck', 'DeckOptimal')
-        name = name.replace('.txt', '.dek')
+    else:
+        name = f'DeckOptimal-{name}'
+
+    name = f'results/{name}'
     export_to_dek(card_choices, import_card_data(to_print=False), name)
 
 
