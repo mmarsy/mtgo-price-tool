@@ -12,18 +12,21 @@ def merge_number_dicts(dict1, dict2):
 def minimize_deck_price(decklist, looks='0'):
     # set up
     deck_divided = DeckReader(decklist)
-    collection = DeckReader('data/Full Trade List.txt').main
-    if looks == '0':
-        for card in deck_divided.main:
-            if card in collection:
-                number = collection[card]
-                collection[card] -= deck_divided.main[card]
-                deck_divided.main[card] = max(0, deck_divided.main[card] - number)
-        for card in deck_divided.side:
-            if card in collection:
-                number = collection[card]
-                collection[card] -= deck_divided.side[card]
-                deck_divided.side[card] = max(0, deck_divided.side[card] - number)
+    try:
+        collection = DeckReader('data/Full Trade List.txt').main
+        if looks == '0':
+            for card in deck_divided.main:
+                if card in collection:
+                    number = collection[card]
+                    collection[card] -= deck_divided.main[card]
+                    deck_divided.main[card] = max(0, deck_divided.main[card] - number)
+            for card in deck_divided.side:
+                if card in collection:
+                    number = collection[card]
+                    collection[card] -= deck_divided.side[card]
+                    deck_divided.side[card] = max(0, deck_divided.side[card] - number)
+    except OSError:
+        print('NO COLLECTION UPLOADED')
 
     deck = merge_number_dicts(deck_divided.main, deck_divided.side)
     prices = import_price_data(to_print=False)
