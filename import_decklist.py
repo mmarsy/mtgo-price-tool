@@ -38,7 +38,7 @@ class DeckReader:
 
 
 def test():
-    DeckReader('Deck - Naya Depths.txt')
+    pass
 
 
 if __name__ == '__main__':

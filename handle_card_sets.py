@@ -34,22 +34,30 @@ class Collection:
             self.simplified[self.full[card]['name']] = self.simplified.get(self.full[card]['name'], 0) + int(self.full[card]['quantity'])
 
 
-def minimize_deck_price(decklist, looks='0'):
+def minimize_deck_price(decklist, looks='0', diff=False):
     # set up
     deck_divided = DeckReader(decklist)
+    missing_cards = None
     try:
         collection = Collection().simplified
+        missing_cards = {'main': {}, 'side': {}}
         if looks == '0':
             for card in deck_divided.main:
                 if card in collection:
                     number = collection[card]
                     collection[card] -= deck_divided.main[card]
+                    change = deck_divided.main[card] - max(0, deck_divided.main[card] - number)
                     deck_divided.main[card] = max(0, deck_divided.main[card] - number)
+                    missing_cards['main'][card] = missing_cards['main'].get(card, 0) + change
             for card in deck_divided.side:
                 if card in collection:
                     number = collection[card]
                     collection[card] -= deck_divided.side[card]
+                    change = deck_divided.side[card] - max(0, deck_divided.side[card] - number)
                     deck_divided.side[card] = max(0, deck_divided.side[card] - number)
+                    missing_cards['side'][card] = missing_cards['side'].get(card, 0) + change
+        for i in missing_cards:
+            print(f'{i}: {missing_cards[i]}')
     except OSError:
         print('NO COLLECTION UPLOADED')
 
@@ -66,9 +74,6 @@ def minimize_deck_price(decklist, looks='0'):
         choices.append(card_id)
         deck_price += card_prices[card_id] * deck[card]
 
-    # return
-    print(f'DECK PRICE: {deck_price}')
-
     choices_main = {}
     choices_side = {}
     for card in deck_divided.main:
@@ -78,12 +83,38 @@ def minimize_deck_price(decklist, looks='0'):
         chosen_id = list(set(card.ids) & set(choices))[0]
         choices_side[chosen_id] = deck_divided.side[card]
 
+    # add already owned cards
+    if not diff and missing_cards is not None:
+        # gather ids of missing cards
+        replacements = {'main': {}, 'side': {}}
+        collection = Collection().full
+        for card in missing_cards['main']:
+            missing = missing_cards['main'][card]
+            possible_replacements = {_id: collection[_id]['quantity'] for _id in collection if collection[_id]['name'] == card}
+            for _id in possible_replacements:
+                replacements['main'][_id] = min(int(missing), int(possible_replacements[_id]))
+                missing_cards['main'][card] -= replacements['main'][_id]
+                if missing_cards['main'][card] <= 0:
+                    break
+        for card in missing_cards['side']:
+            missing = missing_cards['side'][card]
+            possible_replacements = {_id: collection[_id]['quantity'] for _id in collection if collection[_id]['name'] == card}
+            for _id in possible_replacements:
+                replacements['side'][_id] = min(int(missing), int(possible_replacements[_id]))
+                missing_cards['side'][card] -= replacements['side'][_id]
+                if missing_cards['side'][card] <= 0:
+                    break
+
+    # return
+    print(f'DECK PRICE: {deck_price}')
     choices = {'main': choices_main, 'side': choices_side}
+    for key in choices:
+        choices[key] = merge_number_dicts(choices[key], replacements[key])
     return deck_price, choices
 
 
 def test():
-    d = Collection().simplified
+    d = Collection().full
     for i in d:
         print(i, d[i])
 

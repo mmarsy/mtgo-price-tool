@@ -48,21 +48,7 @@ def show(cards, prices):
 
 
 def test():
-    # import
-    cards = import_card_data(False)
-    prices = import_price_data(False)
-
-    # filtering
-    cards = {card: cards[card] for card in cards if cards[card]['rarity'] != 'Booster'}
-    prices = {card: prices[card] for card in prices if prices[card] > 0.5 and card in cards}
-
-    # return
-    # show(cards, prices)
-    # print(len(prices))
-
-    d = get_cards()
-    for i in d:
-        print(i, d[i])
+    pass
 
 
 if __name__ == '__main__':
