@@ -1,6 +1,8 @@
 from import_cards import import_price_data
 from import_decklist import DeckReader
 
+import xml.etree.ElementTree as ElementTree
+
 
 def merge_number_dicts(dict1, dict2):
     # we assume that values are numbers
@@ -9,11 +11,34 @@ def merge_number_dicts(dict1, dict2):
     return result_dict
 
 
+def import_full_collection(to_print=False):
+    tree = ElementTree.parse('data/Full Trade List.dek')
+    root = tree.getroot()
+    cards = {}
+
+    for item in root.findall('Cards'):
+        cards[item.attrib['CatID']] = {'name': item.attrib['Name'], 'quantity': item.attrib['Quantity']}
+
+    if to_print:
+        for card in cards:
+            print(f'{card}: {cards[card]}')
+
+    return cards
+
+
+class Collection:
+    def __init__(self):
+        self.full = import_full_collection(False)
+        self.simplified = {}
+        for card in self.full:
+            self.simplified[self.full[card]['name']] = self.simplified.get(self.full[card]['name'], 0) + int(self.full[card]['quantity'])
+
+
 def minimize_deck_price(decklist, looks='0'):
     # set up
     deck_divided = DeckReader(decklist)
     try:
-        collection = DeckReader('data/Full Trade List.txt').main
+        collection = Collection().simplified
         if looks == '0':
             for card in deck_divided.main:
                 if card in collection:
@@ -56,3 +81,12 @@ def minimize_deck_price(decklist, looks='0'):
     choices = {'main': choices_main, 'side': choices_side}
     return deck_price, choices
 
+
+def test():
+    d = Collection().simplified
+    for i in d:
+        print(i, d[i])
+
+
+if __name__ == '__main__':
+    test()
