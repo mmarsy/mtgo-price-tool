@@ -1,9 +1,9 @@
 from xml.dom import minidom
-from main import minimize_deck_price
+from handle_card_sets import minimize_deck_price
 from import_cards import import_card_data
 
 
-def parse_to_dek(choice_of_cards, dictionary_of_cards, name=None):
+def export_to_dek(choice_of_cards, dictionary_of_cards, name=None):
     # choice_of_cards contains of two dictionaries whose key are ids of cards and values are number of copies
     # particular card.
 
@@ -48,8 +48,8 @@ def parse_to_dek(choice_of_cards, dictionary_of_cards, name=None):
 
 
 def test():
-    price, choice = minimize_deck_price('Deck - Naya Depths.txt')
-    parse_to_dek(choice, import_card_data(to_print=False))
+    price, choice = minimize_deck_price('uploaded-decks/Deck - Naya Depths.txt')
+    export_to_dek(choice, import_card_data(to_print=False))
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@ import json
 from Card import Card
 
 
-def import_card_data(file='card-definitions.txt', to_print=True):
+def import_card_data(file='data/card-definitions.txt', to_print=True):
     with open(file, 'r', encoding='utf-8') as cards:
         json_data = json.load(cards)
         if to_print:
@@ -12,7 +12,7 @@ def import_card_data(file='card-definitions.txt', to_print=True):
         return json_data
 
 
-def import_price_data(file='price-history-2023-04-06.txt', to_print=False, cards=None):
+def import_price_data(file='data/price-history-2023-04-06.txt', to_print=False, cards=None):
     with open(file, 'r', encoding='utf-8') as prices:
         json_data = json.load(prices)
         if cards is not None and to_print:

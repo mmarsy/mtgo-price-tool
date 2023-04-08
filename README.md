@@ -1,2 +1,0 @@
-# mtgo-price-tool
- 
