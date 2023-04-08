@@ -14,6 +14,7 @@ def main():
     name = decklist
     if 'Deck' in name:
         name = name.replace('Deck', 'DeckOptimal')
+        name = name.replace('.txt', '.dek')
     export_to_dek(card_choices, import_card_data(to_print=False), name)
 
 
