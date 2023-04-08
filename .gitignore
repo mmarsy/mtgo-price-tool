@@ -152,5 +152,5 @@ cython_debug/
 .idea/
 
 Deck*
-Full Trade List.txt
+Full Trade List*
 uploaded-decks/
