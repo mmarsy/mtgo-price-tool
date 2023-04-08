@@ -11,24 +11,33 @@ def merge_number_dicts(dict1, dict2):
 
 def minimize_deck_price(decklist):
     # set up
-    deck = DeckReader(decklist)
-    deck = merge_number_dicts(deck.main, deck.side)
+    deck_divided = DeckReader(decklist)
+    deck = merge_number_dicts(deck_divided.main, deck_divided.side)
     prices = import_price_data(to_print=False)
     deck_price = 0
-    choices = {}
+    choices = []
 
     # main part
     for card in deck:
         card_prices = {_id: prices[_id] for _id in card.ids}
         card_id = min(card_prices, key=card_prices.get)
 
-        choices[card_id] = deck[card]
+        choices.append(card_id)
         deck_price += card_prices[card_id] * deck[card]
 
     # return
     print(deck_price)
-    for i in choices:
-        print(f'{i}: {choices[i]}')
+
+    choices_main = {}
+    choices_side = {}
+    for card in deck_divided.main:
+        chosen_id = list(set(card.ids) & set(choices))[0]
+        choices_main[chosen_id] = deck_divided.main[card]
+    for card in deck_divided.side:
+        chosen_id = list(set(card.ids) & set(choices))[0]
+        choices_side[chosen_id] = deck_divided.side[card]
+
+    choices = {'main': choices_main, 'side': choices_side}
     return deck_price, choices
 
 
