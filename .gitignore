@@ -154,3 +154,4 @@ cython_debug/
 Deck*
 Full Trade List*
 uploaded-decks/
+data/
