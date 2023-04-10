@@ -1,7 +1,7 @@
 import json
 import os
 
-from Card import Card
+from card import Card
 
 
 def import_card_data(file='data/card-definitions.txt', to_print=True):

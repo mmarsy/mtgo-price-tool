@@ -4,6 +4,12 @@ import io
 import os
 
 
+def import_card_definitions():
+    r = requests.get('https://www.goatbots.com/download/card-definitions.zip?', stream=True)
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    z.extractall(path='data')
+
+
 def update_prices():
     list_of_files = os.listdir('data')
     for file in list_of_files:
@@ -16,7 +22,7 @@ def update_prices():
 
 
 def test():
-    update_prices()
+    import_card_definitions()
 
 
 if __name__ == '__main__':
