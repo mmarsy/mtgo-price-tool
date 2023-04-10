@@ -113,6 +113,7 @@ def minimize_deck_price(decklist):
             choices[key] = merge_number_dicts(choices[key], replacements[key])
     else:
         print('CONSIDER UPLOADING YOUR COLLECTION FOR BETTER RESULTS (IN .dek FORMAT)')
+        print('DOWNLOAD IT FROM MRGO CLIENT AND PASTE INTO data/ DIRECTORY')
     return deck_price, choices
 
 
