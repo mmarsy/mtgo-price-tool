@@ -1,4 +1,5 @@
 import json
+import os
 
 from Card import Card
 
@@ -12,7 +13,11 @@ def import_card_data(file='data/card-definitions.txt', to_print=True):
         return json_data
 
 
-def import_price_data(file='data/price-history-2023-04-06.txt', to_print=False, cards=None):
+def import_price_data(file=None, to_print=False, cards=None):
+    if file is None:
+        candidates = [f'data/{item}' for item in os.listdir('data') if 'price-history-' in item]
+        file = candidates[0]
+
     with open(file, 'r', encoding='utf-8') as prices:
         json_data = json.load(prices)
         if cards is not None and to_print:

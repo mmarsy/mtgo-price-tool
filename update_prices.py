@@ -16,10 +16,8 @@ def update_prices():
 
 
 def test():
-    r = requests.get('https://www.goatbots.com/download/price-history.zip?', stream=True)
-    z = zipfile.ZipFile(io.BytesIO(r.content))
-    z.extractall(path='data')
+    update_prices()
 
 
 if __name__ == '__main__':
-    update_prices()
+    test()

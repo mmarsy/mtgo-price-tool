@@ -3,9 +3,11 @@ import os
 from handle_card_sets import minimize_deck_price
 from export_decklist import export_to_dek
 from import_cards import import_card_data
+from update_prices import update_prices
 
 
 def main():
+    update_prices()
     decks = {str(index): file for index, file in enumerate(os.listdir('uploaded-decks'))}
     for key in decks:
         print(f'{key}: {decks[key]}')
