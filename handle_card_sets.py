@@ -34,12 +34,18 @@ class Collection:
             self.simplified[self.full[card]['name']] = self.simplified.get(self.full[card]['name'], 0) + int(self.full[card]['quantity'])
 
 
-def minimize_deck_price(decklist, looks='0', diff=False):
+def minimize_deck_price(decklist, diff=False):
     # set up
     deck_divided = DeckReader(decklist)
-    collection = Collection().simplified
-    missing_cards = {'main': {}, 'side': {}}
-    if looks == '0':
+    collection_uploaded = True
+    collection = None
+    try:
+        collection = Collection().simplified
+    except FileNotFoundError:
+        collection_uploaded = False
+
+    if collection_uploaded:
+        missing_cards = {'main': {}, 'side': {}}
         for card in deck_divided.main:
             if card in collection:
                 number = collection[card]
@@ -78,7 +84,7 @@ def minimize_deck_price(decklist, looks='0', diff=False):
         choices_side[chosen_id] = deck_divided.side[card]
 
     # add already owned cards
-    if not diff:
+    if not diff and collection_uploaded:
         # gather ids of missing cards
         replacements = {'main': {}, 'side': {}}
         collection = Collection().full
@@ -102,8 +108,11 @@ def minimize_deck_price(decklist, looks='0', diff=False):
     # return
     print(f'DECK PRICE: {deck_price}')
     choices = {'main': choices_main, 'side': choices_side}
-    for key in choices:
-        choices[key] = merge_number_dicts(choices[key], replacements[key])
+    if collection_uploaded:
+        for key in choices:
+            choices[key] = merge_number_dicts(choices[key], replacements[key])
+    else:
+        print('CONSIDER UPLOADING YOUR COLLECTION FOR BETTER RESULTS (IN .dek FORMAT)')
     return deck_price, choices
 
 

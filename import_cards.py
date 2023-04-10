@@ -38,7 +38,9 @@ def transpose_dict(d: dict):
     return return_d
 
 
-def get_cards(cards=import_card_data(to_print=False)):
+def get_cards(cards=None):
+    if cards is None:
+        cards = import_card_data(to_print=False)
     names = transpose_dict({_id: cards[_id]['name'] for _id in cards})
     return {name: Card(name, names[name]) for name in names}
 
