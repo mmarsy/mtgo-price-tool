@@ -1,7 +1,0 @@
-1) clean up
-	->done, for now
-2) taking already owned cards into consideration
-	-> now, we get difference of deck \ collection
-	-> next step is to add cards from collection to get full deck
-	this requires handling collection in .dek
-3) updating prices
