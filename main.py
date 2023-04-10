@@ -10,6 +10,8 @@ def main():
     # diagnostics and updates
     if not os.path.isdir('data'):
         os.mkdir('data')
+    if not os.path.isdir('results'):
+        os.mkdir('results')
     update_prices()
     import_card_definitions()
 

@@ -34,7 +34,7 @@ class Collection:
             self.simplified[self.full[card]['name']] = self.simplified.get(self.full[card]['name'], 0) + int(self.full[card]['quantity'])
 
 
-def minimize_deck_price(decklist, diff=False):
+def minimize_deck_price(decklist):
     # set up
     deck_divided = DeckReader(decklist)
     collection_uploaded = True
@@ -84,7 +84,7 @@ def minimize_deck_price(decklist, diff=False):
         choices_side[chosen_id] = deck_divided.side[card]
 
     # add already owned cards
-    if not diff and collection_uploaded:
+    if collection_uploaded:
         # gather ids of missing cards
         replacements = {'main': {}, 'side': {}}
         collection = Collection().full
