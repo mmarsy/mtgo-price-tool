@@ -20,9 +20,15 @@ def main():
     decks = {str(index): file for index, file in enumerate(os.listdir('uploaded-decks'))}
     for key in decks:
         print(f'{key}: {decks[key]}')
-    decklist = decks[input('CHOOSE DECKLIST TO HANDLE')]
-    price, card_choices = minimize_deck_price(f'uploaded-decks/{decklist}')
-    name = decklist
+    decklist = input('CHOOSE DECKLIST TO HANDLE OR TYPE ITS PATH\n')
+    if decklist in decks:
+        decklist = decks[decklist]
+        decklist = f'uploaded-decks/{decklist}'
+    if not os.path.isfile(decklist):
+        print('NOT A VALID CHOICE')
+        return
+    price, card_choices = minimize_deck_price(decklist)
+    name = decklist.split('/')[-1]
     name = name.replace('.txt', '.dek')
     if 'Deck' in name:
         name = name.replace('Deck', 'DeckOptimal')
