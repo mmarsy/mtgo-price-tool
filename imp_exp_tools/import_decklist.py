@@ -1,6 +1,9 @@
 import warnings
 
-from import_cards import get_cards
+try:
+    from import_cards import get_cards
+except ModuleNotFoundError:
+    from imp_exp_tools.import_cards import get_cards
 
 
 class DeckReader:

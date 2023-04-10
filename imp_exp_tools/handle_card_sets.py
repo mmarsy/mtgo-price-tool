@@ -1,5 +1,9 @@
-from import_cards import import_price_data
-from import_decklist import DeckReader
+try:
+    from import_cards import import_price_data
+    from import_decklist import DeckReader
+except ModuleNotFoundError:
+    from imp_exp_tools.import_cards import import_price_data
+    from imp_exp_tools.import_decklist import DeckReader
 
 import xml.etree.ElementTree as ElementTree
 

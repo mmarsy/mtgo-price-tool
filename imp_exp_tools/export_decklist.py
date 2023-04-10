@@ -1,7 +1,12 @@
 import os
 from xml.dom import minidom
-from handle_card_sets import minimize_deck_price
-from import_cards import import_card_data
+
+try:
+    from handle_card_sets import minimize_deck_price
+    from import_cards import import_card_data
+except ModuleNotFoundError:
+    from imp_exp_tools.handle_card_sets import minimize_deck_price
+    from imp_exp_tools.import_cards import import_card_data
 
 
 def export_to_dek(choice_of_cards, dictionary_of_cards, name=None):

@@ -1,7 +1,10 @@
 import json
 import os
 
-from card import Card
+try:
+    from card import Card
+except ModuleNotFoundError:
+    from imp_exp_tools.card import Card
 
 
 def import_card_data(file='data/card-definitions.txt', to_print=True):

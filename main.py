@@ -1,9 +1,9 @@
 import os
 
-from update_prices import update_prices, import_card_definitions
-from handle_card_sets import minimize_deck_price
-from export_decklist import export_to_dek
-from import_cards import import_card_data
+from imp_exp_tools.update_prices import update_prices, import_card_definitions
+from imp_exp_tools.handle_card_sets import minimize_deck_price
+from imp_exp_tools.export_decklist import export_to_dek
+from imp_exp_tools.import_cards import import_card_data
 
 
 def main():
