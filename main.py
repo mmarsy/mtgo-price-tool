@@ -12,6 +12,8 @@ def main():
         os.mkdir('data')
     if not os.path.isdir('results'):
         os.mkdir('results')
+    if not os.path.isdir('uploaded-decks'):
+        os.mkdir('uploaded-decks')
     update_prices()
     import_card_definitions()
 
