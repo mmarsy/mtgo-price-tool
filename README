@@ -1,3 +1,5 @@
 After downloading decks from MTGO page or Goldfish or any other source and readeing them via MTGO Client, we often get suboptimal choice of cards. This tool's purpose is to choose cheapest cards (accordings to Goatbots). You can upload your collection (put .dek file which you can download from MTGO in data/ directory) to have this tool include cards you own while processing decklists.
 
+Before using be sure to install requests module (https://requests.readthedocs.io/en/latest/).
+
 Data source: https://www.goatbots.com/download-prices
