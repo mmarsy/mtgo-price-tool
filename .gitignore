@@ -157,3 +157,4 @@ uploaded-decks/
 data/
 results/
 .A todo
+pyignore*
