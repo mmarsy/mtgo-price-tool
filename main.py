@@ -6,8 +6,7 @@ from imp_exp_tools.export_decklist import export_to_dek
 from imp_exp_tools.import_cards import import_card_data
 
 
-def main():
-    # diagnostics and updates
+def run_diagnostics():
     if not os.path.isdir('data'):
         os.mkdir('data')
     if not os.path.isdir('results'):
@@ -16,6 +15,11 @@ def main():
         os.mkdir('uploaded-decks')
     update_prices()
     import_card_definitions()
+
+
+def main():
+    # diagnostics and updates
+    # run_diagnostics()
 
     decks = {str(index): file for index, file in enumerate(os.listdir('uploaded-decks'))}
     for key in decks:
@@ -27,6 +31,7 @@ def main():
     if not os.path.isfile(decklist):
         print('NOT A VALID CHOICE')
         return
+
     price, card_choices = minimize_deck_price(decklist)
     name = decklist.split('/')[-1]
     name = name.replace('.txt', '.dek')

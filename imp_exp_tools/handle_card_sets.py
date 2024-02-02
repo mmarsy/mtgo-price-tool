@@ -6,6 +6,7 @@ except ModuleNotFoundError:
     from imp_exp_tools.import_decklist import DeckReader
 
 import xml.etree.ElementTree as ElementTree
+import os
 
 
 def merge_number_dicts(dict1, dict2):
@@ -16,16 +17,23 @@ def merge_number_dicts(dict1, dict2):
 
 
 def import_full_collection(to_print=False):
-    tree = ElementTree.parse('data/Full Trade List.dek')
-    root = tree.getroot()
     cards = {}
+    for file in os.listdir('data/collections'):
 
-    for item in root.findall('Cards'):
-        cards[item.attrib['CatID']] = {'name': item.attrib['Name'], 'quantity': item.attrib['Quantity']}
+        tree = ElementTree.parse(f'data/collections/{file}')
+        root = tree.getroot()
 
-    if to_print:
-        for card in cards:
-            print(f'{card}: {cards[card]}')
+        for item in root.findall('Cards'):
+            temp_value = item.attrib['Quantity']
+            try:
+                temp_value += cards[item.attrib['CatID']]['quantity']
+            except KeyError:
+                pass
+            cards[item.attrib['CatID']] = {'name': item.attrib['Name'], 'quantity': temp_value}
+
+        if to_print:
+            for card in cards:
+                print(f'{card}: {cards[card]}')
 
     return cards
 
@@ -35,7 +43,8 @@ class Collection:
         self.full = import_full_collection(False)
         self.simplified = {}
         for card in self.full:
-            self.simplified[self.full[card]['name']] = self.simplified.get(self.full[card]['name'], 0) + int(self.full[card]['quantity'])
+            self.simplified[self.full[card]['name']] = self.simplified.get(self.full[card]['name'], 0) +\
+                                                       int(self.full[card]['quantity'])
 
 
 def minimize_deck_price(decklist):
@@ -43,9 +52,12 @@ def minimize_deck_price(decklist):
     deck_divided = DeckReader(decklist)
     collection_uploaded = True
     collection = None
+    collection = Collection().simplified
     try:
-        collection = Collection().simplified
+        pass
+
     except FileNotFoundError:
+        print('cnwenciwenifew')
         collection_uploaded = False
 
     if collection_uploaded:
@@ -116,8 +128,9 @@ def minimize_deck_price(decklist):
         for key in choices:
             choices[key] = merge_number_dicts(choices[key], replacements[key])
     else:
-        print('CONSIDER UPLOADING YOUR COLLECTION FOR BETTER RESULTS (IN .dek FORMAT)')
-        print('DOWNLOAD IT FROM MRGO CLIENT AND PASTE INTO data/ DIRECTORY')
+        pass
+        #print('CONSIDER UPLOADING YOUR COLLECTION FOR BETTER RESULTS (IN .dek FORMAT)')
+        #print('DOWNLOAD IT FROM MRGO CLIENT AND PASTE INTO data/ DIRECTORY')
     return deck_price, choices
 
 
