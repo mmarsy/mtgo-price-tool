@@ -6,7 +6,7 @@ from imp_exp_tools.export_decklist import export_to_dek
 from imp_exp_tools.import_cards import import_card_data
 
 
-def run_diagnostics():
+def run_setup():
     if not os.path.isdir('data'):
         os.mkdir('data')
     if not os.path.isdir('results'):
@@ -18,8 +18,8 @@ def run_diagnostics():
 
 
 def main():
-    # diagnostics and updates
-    # run_diagnostics()
+    # check
+    run_setup()
 
     decks = {str(index): file for index, file in enumerate(os.listdir('uploaded-decks'))}
     for key in decks:
